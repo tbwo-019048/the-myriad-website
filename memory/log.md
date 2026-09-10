@@ -26,3 +26,13 @@
 - Verified the generated deployment URL redirects to Vercel Login, confirming Deployment Protection is enabled rather than the application failing at runtime.
 - A second Vercel project/deployment named the-myriad-website-g4im is recorded for the same commit but its generated URL returns 410 GONE.
 - Required Vercel-side correction: choose the intended project, assign the-myriad-website.vercel.app as its production domain/alias, and disable Deployment Protection for Production (or allow public access). No source-code change is required for this specific failure.
+
+## 2026-09-10 — Native Vercel/Next.js conversion
+
+- Confirmed the repository was a Cloudflare Worker-oriented Vinext project rather than a native Vercel Next.js application.
+- Replaced Vinext development/build/start commands with native Next.js 16.3.4 commands and changed the Node requirement to the supported Next.js baseline.
+- Removed Vinext, Wrangler, Vite, Cloudflare Worker types/plugins and the OpenAI Sites hosting record.
+- Added the standard Next.js PostCSS configuration and cleaned Cloudflare/Vinext-only TypeScript types.
+- Verified native next build completes with TypeScript checking and prerendering.
+- Verified the production server returns HTTP 200 for the homepage, all public indexes, representative dynamic book/character/news routes, the store, privacy page and secure admin login.
+- Project-owned source passes oxlint after the conversion.
