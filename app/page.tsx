@@ -24,9 +24,11 @@ export default async function Home() {
             <h1>{siteSettings.heroHeading}</h1>
             <p>{siteSettings.heroText}</p>
             <div className="hero-actions">
-              <Link className="button button-primary" href={'/books/' + featured.slug}>
-                Latest release <ArrowRight size={17} />
-              </Link>
+              {featured && (
+                <Link className="button button-primary" href={'/books/' + featured.slug}>
+                  Latest release <ArrowRight size={17} />
+                </Link>
+              )}
               <Link className="button button-ghost" href="/books">
                 Explore the files
               </Link>

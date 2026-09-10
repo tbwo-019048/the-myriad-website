@@ -29,8 +29,8 @@ export async function getGlobalContent() {
 export async function getPublishedSeries() {
   if (!isSupabaseConfigured || !supabase) return series;
   const { data, error } = await supabase.from('series').select('*').eq('is_published', true).is('archived_at', null).order('display_order');
-  if (error) return series;
-  return (data ?? []).map((item) => ({
+  if (error || !data?.length) return series;
+  return data.map((item) => ({
     slug: item.slug,
     name: item.name,
     subtitle: item.subtitle ?? '',
@@ -43,8 +43,8 @@ export async function getPublishedSeries() {
 export async function getPublishedBooks(): Promise<Book[]> {
   if (!isSupabaseConfigured || !supabase) return books;
   const { data, error } = await supabase.from('books').select('*, series(name), book_purchase_links(label,url,display_order,is_enabled)').eq('is_published', true).order('display_order');
-  if (error) return books;
-  return (data ?? []).map((item) => ({
+  if (error || !data?.length) return books;
+  return data.map((item) => ({
     slug: item.slug,
     title: item.title,
     series: item.series?.name ?? 'The Myriad',
@@ -66,15 +66,15 @@ export async function getPublishedBooks(): Promise<Book[]> {
 export async function getPublishedCharacterGroups() {
   if (!isSupabaseConfigured || !supabase) return characterGroups;
   const { data, error } = await supabase.from('character_groups').select('*').eq('is_published', true).is('archived_at', null).order('display_order');
-  if (error) return characterGroups;
-  return (data ?? []).map((item) => ({ name: item.name, description: item.description ?? '' }));
+  if (error || !data?.length) return characterGroups;
+  return data.map((item) => ({ name: item.name, description: item.description ?? '' }));
 }
 
 export async function getPublishedCharacters(): Promise<Character[]> {
   if (!isSupabaseConfigured || !supabase) return characters;
   const { data, error } = await supabase.from('characters').select('*, character_groups(name), books(title)').eq('is_published', true).order('display_order');
-  if (error) return characters;
-  return (data ?? []).map((item) => ({
+  if (error || !data?.length) return characters;
+  return data.map((item) => ({
     slug: item.slug,
     name: item.name,
     role: item.rank_title ?? '',
@@ -93,8 +93,8 @@ export async function getPublishedCharacters(): Promise<Character[]> {
 export async function getPublishedArticles(): Promise<Article[]> {
   if (!isSupabaseConfigured || !supabase) return articles;
   const { data, error } = await supabase.from('news_articles').select('*, news_categories(name)').eq('is_published', true).lte('publication_date', new Date().toISOString()).order('publication_date', { ascending: false });
-  if (error) return articles;
-  return (data ?? []).map((item) => ({
+  if (error || !data?.length) return articles;
+  return data.map((item) => ({
     slug: item.slug,
     title: item.title,
     summary: item.summary ?? '',
@@ -109,8 +109,8 @@ export async function getPublishedArticles(): Promise<Article[]> {
 export async function getPublishedProducts() {
   if (!isSupabaseConfigured || !supabase) return products;
   const { data, error } = await supabase.from('products').select('*, product_categories(name)').eq('is_published', true).order('display_order');
-  if (error) return products;
-  return (data ?? []).map((item) => ({
+  if (error || !data?.length) return products;
+  return data.map((item) => ({
     name: item.name,
     subtitle: item.subtitle ?? '',
     category: item.product_categories?.name ?? 'Catalogue',
