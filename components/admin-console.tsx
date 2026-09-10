@@ -7,6 +7,7 @@ import type { Session } from '@supabase/supabase-js';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { BrandMark } from './brand-mark';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
@@ -59,7 +60,7 @@ function Login({ onSession }: { onSession: (session: Session) => void }) {
         ) : (
           <form onSubmit={signIn}>
             <label htmlFor="admin-email">Email</label><Input id="admin-email" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-            <label htmlFor="admin-password">Password</label><Input id="admin-password" type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} />
+            <label htmlFor="admin-password">Password</label><PasswordInput id="admin-password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} />
             {message && <p role="alert" className="form-error">{message}</p>}
             <Button type="submit" disabled={loading}>{loading ? 'Authenticating…' : 'Secure sign in'}</Button>
           </form>
