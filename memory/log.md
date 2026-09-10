@@ -36,3 +36,5 @@
 - Verified native next build completes with TypeScript checking and prerendering.
 - Verified the production server returns HTTP 200 for the homepage, all public indexes, representative dynamic book/character/news routes, the store, privacy page and secure admin login.
 - Project-owned source passes oxlint after the conversion.
+- Verified Vercel successfully deployed commit b9247c7 through its native Next.js build path.
+- The generated deployment remains behind Vercel SSO and the requested the-myriad-website.vercel.app alias still returns 404; those final public-access settings must be changed in the Vercel project.
