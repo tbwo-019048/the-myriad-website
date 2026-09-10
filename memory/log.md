@@ -18,3 +18,11 @@
 - Added setup documentation and environment key template.
 - Verified the production build and all representative public/detail/admin routes. Project-owned source passes oxlint; untouched scaffold UI primitives retain their upstream lint warnings.
 - The two context-based Shadcn wrappers used for admin tabs/dialogs caused a Vinext renderer conflict; the admin now uses semantic native navigation and dialog controls while retaining Shadcn button/input/textarea primitives.
+
+## 2026-09-10 — Production deployment diagnosis
+
+- Checked https://the-myriad-website.vercel.app/ in a browser and via HTTP: it returns Vercel 404 NOT_FOUND and is not attached to the successful deployment.
+- Verified GitHub/Vercel reports commit 830cc08 as successfully deployed.
+- Verified the generated deployment URL redirects to Vercel Login, confirming Deployment Protection is enabled rather than the application failing at runtime.
+- A second Vercel project/deployment named the-myriad-website-g4im is recorded for the same commit but its generated URL returns 410 GONE.
+- Required Vercel-side correction: choose the intended project, assign the-myriad-website.vercel.app as its production domain/alias, and disable Deployment Protection for Production (or allow public access). No source-code change is required for this specific failure.
